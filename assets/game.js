@@ -24,7 +24,7 @@ var holdslosses = document.getElementById("loss-text");
 //When the user presses a key.
 document.onkeyup = function(event) {
 //defines userGuess as the onkeyup event.
-    userGuess.push(String.fromCharCode(event));
+    userGuess.push(event.key);
     
     //computer chooses what letter will win. 
     var computerGuess= computerchoices[Math.floor(Math.random()*computerchoices.length)];
@@ -38,6 +38,11 @@ document.onkeyup = function(event) {
     if ((guessleft===0)){
         losses++;
         guessleft=7;
+        function empty () {
+            //empty array
+            userGuess.length = 0;
+        }
+        empty();
     }
 
     if ((userGuess === computerGuess)){
