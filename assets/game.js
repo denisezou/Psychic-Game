@@ -21,37 +21,44 @@ var holdsguessleft = document.getElementById("guesses-remain-text");
 var holdswins = document.getElementById("wins-text");
 var holdslosses = document.getElementById("loss-text");
 
+//computer chooses what letter will win. 
+let computerGuess = computerchoices[Math.floor(Math.random() * computerchoices.length)];
+
+
+
 //When the user presses a key.
 document.onkeyup = function(event) {
-//defines userGuess as the onkeyup event.
+
+    //defines userGuess as the onkeyup event.
     userGuess.push(event.key);
-    
-    //computer chooses what letter will win. 
-    var computerGuess= computerchoices[Math.floor(Math.random()*computerchoices.length)];
-    console.log(computerGuess);
 
     //logic for wins and losses.
-    if ((userGuess !== computerGuess) || (userGuess.length < 8)){
+    if ((userGuess.includes(computerGuess))){
+        wins++;
+        guessleft=7;
+        function reset () {
+            //empty array
+            userGuess.length = 0;
+            //computer picks new letter
+            let computerGuess = computerchoices[Math.floor(Math.random() * computerchoices.length)];
+        }
+        reset ();
+    } else {
         guessleft--;
     }
+
     
     if ((guessleft===0)){
         losses++;
         guessleft=7;
-        function empty () {
+        function reset () {
             //empty array
             userGuess.length = 0;
+            //computer picks new letter
+            let computerGuess = computerchoices[Math.floor(Math.random() * computerchoices.length)];
         }
-        empty();
+        reset ();
     }
-
-    if ((userGuess === computerGuess)){
-        guessleft=7;
-        wins++;
-    }
-    
-    
-
 
 //controlling the stats displayed on the page.
     holdsguesses.textContent = "These have been your guesses: " + userGuess;
